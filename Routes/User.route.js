@@ -71,6 +71,7 @@ userRouter.post("/login", async (req, res) => {
             success: true,
             msg: "Login Successful",
             token: token,
+            user: user,
           });
           console.log({
             msg: "Login Successful",
