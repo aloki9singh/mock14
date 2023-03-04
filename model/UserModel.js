@@ -8,9 +8,6 @@ const userSchema = mongoose.Schema(
       unique: true,
     },
     password: { type: String, required: [true, "Please Enter Your Password"] },
-    bio: { type: String, required: [true, "Please Enter Your Bio"] },
-    phone: { type: Number, required: [true, "Please Enter Your Phone"] },
-    image: { type: String, required: [true, "Please Enter Your Image"] },
   },
   {
     versionKey: false,
@@ -20,5 +17,5 @@ const userSchema = mongoose.Schema(
 const UserModel = mongoose.model("User", userSchema);
 
 module.exports = {
-  UserModel
-}
+  UserModel,
+};

@@ -15,20 +15,8 @@ userRouter.get("/", async (req, res) => {
   }
 });
 
-userRouter.get("/getProfile/:id", async (req, res) => {
-  try {
-    const id = req.params.id;
-    const user = await UserModel.findById({ _id: id })
-    res.status(200).json({
-      success: true,
-      User: user,
-    });
-  } catch (err) {
-    console.log({ err: err });
-    res.send({ success: false, err: err });
-  }
-});
-userRouter.post("/register", async (req, res) => {
+
+userRouter.post("/signup", async (req, res) => {
   const { name, email, password,bio,phone,image } = req.body;
 
   try {
@@ -42,7 +30,7 @@ userRouter.post("/register", async (req, res) => {
 
         res.status(201).json({
           success: true,
-          msg: "Registation Successful",
+          msg: "Sign In Successful",
         });
       }
     });
@@ -51,7 +39,7 @@ userRouter.post("/register", async (req, res) => {
     res.send({
       success: false,
       error: error,
-      msg: "Registation Failed",
+      msg: "Sign In Failed",
     });
   }
 });
@@ -71,7 +59,6 @@ userRouter.post("/login", async (req, res) => {
             success: true,
             msg: "Login Successful",
             token: token,
-            user: user,
           });
           console.log({
             msg: "Login Successful",
@@ -80,11 +67,11 @@ userRouter.post("/login", async (req, res) => {
         } else {
           res.send({
             success: false,
-            msg: "Error While Logging User",
+            msg: "Invalid Credentials",
             err: err,
           });
           console.log({
-            msg: "Login Failed",
+            msg: "Invalid Credentials",
             err: err,
           });
         }
@@ -95,35 +82,12 @@ userRouter.post("/login", async (req, res) => {
     res.send({
       success: false,
       error: error,
-      msg: "Login Failed",
+      msg: "Invalid Credentials",
     });
   }
 });
 
 
-userRouter.patch("/users/:id", async (req, res) => {
-  const payload = req.body;
-  const id = req.params.id;
-  const user = await UserModel.findById({ _id: id });
-  // const userID = user[0].userID;
-  // const userreqID = req.body.userID;
- 
-  try {
-    // if (userID !== userreqID) {
-    //   res.send({ success: false, err: "You are not Authorized" });
-    // } else {
-      const user = await UserModel.findByIdAndUpdate({ _id: id }, payload);
-      res.status(204).json({
-        success: true,
-        msg: "Successfully Updated the user",
-        users: user,
-       });
-    // }
-  } catch (err) {
-    console.log({ err: err, msg: " User Update Error!" });
-    res.send({ success: false, msg: " User Update Error!", err: err });
-  }
-});
 
 module.exports = {
   userRouter,
